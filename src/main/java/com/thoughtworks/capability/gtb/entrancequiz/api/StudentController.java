@@ -2,6 +2,8 @@ package com.thoughtworks.capability.gtb.entrancequiz.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -66,6 +68,12 @@ public class StudentController {
             groupedStudents.add(groupStudents);
         }
         return ResponseEntity.ok(groupedStudents);
+    }
+
+    @PostMapping("/student")
+    public ResponseEntity<List<String>> addStudent(@RequestBody String student) {
+        students.add(student);
+        return getStudentList();
     }
 
     private List<String> getIndexedStudentList() {
