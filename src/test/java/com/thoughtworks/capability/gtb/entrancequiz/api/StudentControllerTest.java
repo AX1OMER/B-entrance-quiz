@@ -38,4 +38,10 @@ public class StudentControllerTest {
                 .andExpect(jsonPath("$[14]", is("15. 蔡文姬")))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void shouldShuffleStudents() throws Exception {
+        mockMvc.perform(get("/student/group"))
+                .andExpect(status().isOk());
+    }
 }
