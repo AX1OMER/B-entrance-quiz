@@ -10,9 +10,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+//TODO GTB-完成度: * 没有单独的 查询 groups 的 API
+//TODO GTB-完成度: * 返回的数据类型都没有封装，全都是数组套数组
+
+//TODO GTB-工程实践: - 实现全都写在了 controller 里，很不好！
+
 @RestController
 public class StudentController {
 
+    //TODO GTB-工程实践: - 使用原始 collection 来存储数据，建议抽象出来 Repository
+    //TODO GTB-工程实践: - 没有提取出 Student 的概念！
     List<String> students = new ArrayList<String>() {{
         add("成吉思汗");
         add("鲁班七号");
@@ -31,8 +38,11 @@ public class StudentController {
         add("蔡文姬");
     }};
 
+    //TODO GTB-工程实践: - 没有提取出 Group 的概念！
     List<List<String>> groupedStudents = new ArrayList<List<String>>();
 
+    //TODO GTB-知识点: - URL 不符合 REST 规范
+    //TODO GTB-知识点: - 可以使用 @ResponseStatus 简化代码
     @GetMapping("/student/list")
     public ResponseEntity<List<String>> getStudentList() {
         List<String> indexedStudents = getIndexedStudentList();
@@ -41,6 +51,7 @@ public class StudentController {
 
     @GetMapping("/student/group")
     public ResponseEntity<List<List<String>>> groupedStudentList() {
+        //TODO GTB-工程实践: - 实现过于复杂，不可读。
         groupedStudents.clear();
         int groupNumber = 6;
         int totalNumber = students.size();
@@ -70,6 +81,7 @@ public class StudentController {
         return ResponseEntity.ok(groupedStudents);
     }
 
+    //TODO GTB-工程实践: - 这里 URL 是复数更好
     @PostMapping("/student")
     public ResponseEntity<List<String>> addStudent(@RequestBody String student) {
         students.add(student);
